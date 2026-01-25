@@ -1,0 +1,20 @@
+/**
+ * @author Artem Lytvynov
+ * @copyright Artem Lytvynov
+ * @license Apache2.0
+ */
+
+namespace document;
+
+/// File data structure.
+table FileStruct {
+  name: string;
+  content: [ubyte];
+}
+
+/// Document files structure.
+table DocumentFilesStruct {
+  connections: [FileStruct];
+  models: [FileStruct];
+  frames: [FileStruct];
+}
