@@ -18,3 +18,10 @@ table DocumentFilesStruct {
   models: [FileStruct];
   frames: [FileStruct];
 }
+
+/// Document file statuses structure.
+table DocumentFileStatusesStruct {
+  name: [string];
+  status: [string];
+  message: [string];
+}
