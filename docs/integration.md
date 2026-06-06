@@ -95,8 +95,9 @@ consumer Dockerfile, then regenerate bindings everywhere.
 Order (always schema-first):
 
 1. **Edit the `.fbs` in this repo.** Append-only for enums and tables; never reorder
-   variants or remove fields (FlatBuffers tolerates appending optional fields but does not
-   tolerate renumbering). See "Backwards compatibility" below.
+   variants. Remove fields only under the flush-and-recompile exception in
+   "Backwards compatibility" below (FlatBuffers tolerates appending optional fields but
+   does not tolerate renumbering).
 2. **Validate locally** with `flatc` — see [development.md](development.md).
 3. **Land + tag** here.
 4. **`HDML-Utilities-TS`** — regenerate via `npm run compile_fbs` in `packages/schemas`,
@@ -124,3 +125,10 @@ The same FlatBuffers structs are used for wire payloads **and** on-disk artifact
 - **Breaking:** renaming a field; reordering or renumbering an enum; removing a union
   variant; changing a field's type; changing an enum's base type. Any of these requires a
   data migration for existing on-disk artifacts, not just a coordinated build.
+- **Field removal (conditional).** Removing a field is normally breaking — with no
+  explicit `(id:N)` attributes it renumbers later fields' vtable slots, so old artifacts
+  mis-decode silently under new bindings. It is permitted **only** when both hold: (1) the
+  field is already always-empty across every live producer (no consumer writes or reads
+  it), **and** (2) the roll-out flushes all on-disk artifacts and recompiles them from
+  tenant source, so no old-schema bytes are ever decoded by new bindings. The
+  `hdml-include` removal (project 002) is the first such case.

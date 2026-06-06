@@ -20,7 +20,7 @@ root [../../CLAUDE.md](../../CLAUDE.md).
 
 | Looking for… | Open |
 |---|---|
-| Every table/union and what each field means (Connection, Model, Frame, Field, FilterClause, Include, FilesList, HDOM) | [docs/schemas.md](docs/schemas.md) |
+| Every table/union and what each field means (Connection, Model, Frame, Field, FilterClause, FilesList, HDOM) | [docs/schemas.md](docs/schemas.md) |
 | Every enum and its allowed values (DataType, ConnectorTypes, FilterName, JoinType, TimeZone, …) | [docs/enums.md](docs/enums.md) |
 | How downstream repos generate bindings; how a schema change rolls out across the stack | [docs/integration.md](docs/integration.md) |
 | How to set up locally, validate a `.fbs` edit, add a new type | [docs/development.md](docs/development.md) |
@@ -57,7 +57,7 @@ bindings now live exclusively in the consuming repos.
 This repo's **only output** is the `.fbs` source. The contract is the file layout, the
 namespaces (`document`, `enum`), and the `HDOMStruct` envelope.
 
-- **HDOM envelope** — `document.HDOMStruct { includes, connections, models, frames }`
+- **HDOM envelope** — `document.HDOMStruct { connections, models, frames }`
   defined in [src/document.HDOM.fbs](src/document.HDOM.fbs). Full per-field reference:
   [docs/schemas.md](docs/schemas.md).
 - **flatc version** — schemas must be compiled with **flatc v24.3.25**; mismatched tool

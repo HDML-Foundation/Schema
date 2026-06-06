@@ -15,28 +15,16 @@ filename is the namespace prefix.
 
 ```flatbuffers
 table HDOMStruct {
-  includes:    [document.IncludeStruct];
   connections: [document.ConnectionStruct];
   models:      [document.ModelStruct];
   frames:      [document.FrameStruct];
 }
 ```
 
-A distributed HDML document is stitched together by merging the four arrays from each
-included file. Authoring order inside an array is preserved.
-
-## Include — distributed-document linkage
-
-[document.Include.fbs](../src/document.Include.fbs)
-
-```flatbuffers
-table IncludeStruct { path: string; }
-```
-
-A pointer to another HDML file to merge into this one. Path resolution is the consumer's
-responsibility (the schema only carries the string). TODO(confirm: whether resolution is
-filesystem-relative, repo-relative, or URL-style — defined in HDIO-Server's compile pipeline,
-not here.)
+A distributed HDML document is stitched together at ingest/query time by resolving each
+`frame.source` URL — the path component before `?` names the file, the fragment after it
+names the element (e.g. `source="/path/to/other.html?hdml-frame=base"`). Authoring order
+inside an array is preserved.
 
 ## Connection — data sources
 

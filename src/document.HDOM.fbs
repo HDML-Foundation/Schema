@@ -4,7 +4,6 @@
  * @license Apache2.0
  */
 
-include "./document.Include.fbs";
 include "./document.Connection.fbs";
 include "./document.Model.fbs";
 include "./document.Frame.fbs";
@@ -13,7 +12,6 @@ namespace document;
 
 /// HyperData Object Model data structure.
 table HDOMStruct {
-  includes: [document.IncludeStruct];
   connections: [document.ConnectionStruct];
   models: [document.ModelStruct];
   frames: [document.FrameStruct];
